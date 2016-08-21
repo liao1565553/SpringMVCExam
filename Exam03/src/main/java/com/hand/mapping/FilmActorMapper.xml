@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.dao.FilmActorMapper" >
+  <resultMap id="BaseResultMap" type="com.hand.domain.FilmActor" >
+    <id column="actor_id" property="actorId" jdbcType="SMALLINT" />
+    <id column="film_id" property="filmId" jdbcType="SMALLINT" />
+    <result column="last_update" property="lastUpdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    actor_id, film_id, last_update
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hand.domain.FilmActorKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from film_actor
+    where actor_id = #{actorId,jdbcType=SMALLINT}
+      and film_id = #{filmId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.hand.domain.FilmActorKey" >
+    delete from film_actor
+    where actor_id = #{actorId,jdbcType=SMALLINT}
+      and film_id = #{filmId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.hand.domain.FilmActor" >
+    insert into film_actor (actor_id, film_id, last_update
+      )
+    values (#{actorId,jdbcType=SMALLINT}, #{filmId,jdbcType=SMALLINT}, #{lastUpdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hand.domain.FilmActor" >
+    insert into film_actor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="actorId != null" >
+        actor_id,
+      </if>
+      <if test="filmId != null" >
+        film_id,
+      </if>
+      <if test="lastUpdate != null" >
+        last_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="actorId != null" >
+        #{actorId,jdbcType=SMALLINT},
+      </if>
+      <if test="filmId != null" >
+        #{filmId,jdbcType=SMALLINT},
+      </if>
+      <if test="lastUpdate != null" >
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hand.domain.FilmActor" >
+    update film_actor
+    <set >
+      <if test="lastUpdate != null" >
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where actor_id = #{actorId,jdbcType=SMALLINT}
+      and film_id = #{filmId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hand.domain.FilmActor" >
+    update film_actor
+    set last_update = #{lastUpdate,jdbcType=TIMESTAMP}
+    where actor_id = #{actorId,jdbcType=SMALLINT}
+      and film_id = #{filmId,jdbcType=SMALLINT}
+  </update>
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.dao.FilmTextMapper" >
+  <resultMap id="BaseResultMap" type="com.hand.domain.FilmText" >
+    <id column="film_id" property="filmId" jdbcType="SMALLINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hand.domain.FilmText" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    film_id, title
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from film_text
+    where film_id = #{filmId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from film_text
+    where film_id = #{filmId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.hand.domain.FilmText" >
+    insert into film_text (film_id, title, description
+      )
+    values (#{filmId,jdbcType=SMALLINT}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hand.domain.FilmText" >
+    insert into film_text
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="filmId != null" >
+        film_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="filmId != null" >
+        #{filmId,jdbcType=SMALLINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hand.domain.FilmText" >
+    update film_text
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where film_id = #{filmId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hand.domain.FilmText" >
+    update film_text
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where film_id = #{filmId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hand.domain.FilmText" >
+    update film_text
+    set title = #{title,jdbcType=VARCHAR}
+    where film_id = #{filmId,jdbcType=SMALLINT}
+  </update>
+</mapper>

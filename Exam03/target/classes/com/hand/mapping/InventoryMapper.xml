@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.dao.InventoryMapper" >
+  <resultMap id="BaseResultMap" type="com.hand.domain.Inventory" >
+    <id column="inventory_id" property="inventoryId" jdbcType="INTEGER" />
+    <result column="film_id" property="filmId" jdbcType="SMALLINT" />
+    <result column="store_id" property="storeId" jdbcType="TINYINT" />
+    <result column="last_update" property="lastUpdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    inventory_id, film_id, store_id, last_update
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from inventory
+    where inventory_id = #{inventoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from inventory
+    where inventory_id = #{inventoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hand.domain.Inventory" >
+    insert into inventory (inventory_id, film_id, store_id, 
+      last_update)
+    values (#{inventoryId,jdbcType=INTEGER}, #{filmId,jdbcType=SMALLINT}, #{storeId,jdbcType=TINYINT}, 
+      #{lastUpdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hand.domain.Inventory" >
+    insert into inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="inventoryId != null" >
+        inventory_id,
+      </if>
+      <if test="filmId != null" >
+        film_id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="lastUpdate != null" >
+        last_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="inventoryId != null" >
+        #{inventoryId,jdbcType=INTEGER},
+      </if>
+      <if test="filmId != null" >
+        #{filmId,jdbcType=SMALLINT},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=TINYINT},
+      </if>
+      <if test="lastUpdate != null" >
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hand.domain.Inventory" >
+    update inventory
+    <set >
+      <if test="filmId != null" >
+        film_id = #{filmId,jdbcType=SMALLINT},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=TINYINT},
+      </if>
+      <if test="lastUpdate != null" >
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where inventory_id = #{inventoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hand.domain.Inventory" >
+    update inventory
+    set film_id = #{filmId,jdbcType=SMALLINT},
+      store_id = #{storeId,jdbcType=TINYINT},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP}
+    where inventory_id = #{inventoryId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.dao.AddressMapper" >
+  <resultMap id="BaseResultMap" type="com.hand.domain.Address" >
+    <id column="address_id" property="addressId" jdbcType="SMALLINT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="address2" property="address2" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="SMALLINT" />
+    <result column="postal_code" property="postalCode" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="last_update" property="lastUpdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    address_id, address, address2, district, city_id, postal_code, phone, last_update
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    from address
+    where address_id = #{addressId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from address
+    where address_id = #{addressId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.hand.domain.Address" >
+    insert into address (address_id, address, address2, 
+      district, city_id, postal_code, 
+      phone, last_update)
+    values (#{addressId,jdbcType=SMALLINT}, #{address,jdbcType=VARCHAR}, #{address2,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR}, #{cityId,jdbcType=SMALLINT}, #{postalCode,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{lastUpdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hand.domain.Address" >
+    insert into address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="addressId != null" >
+        address_id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="address2 != null" >
+        address2,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="postalCode != null" >
+        postal_code,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="lastUpdate != null" >
+        last_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="addressId != null" >
+        #{addressId,jdbcType=SMALLINT},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="address2 != null" >
+        #{address2,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=SMALLINT},
+      </if>
+      <if test="postalCode != null" >
+        #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdate != null" >
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hand.domain.Address" >
+    update address
+    <set >
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="address2 != null" >
+        address2 = #{address2,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=SMALLINT},
+      </if>
+      <if test="postalCode != null" >
+        postal_code = #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdate != null" >
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where address_id = #{addressId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hand.domain.Address" >
+    update address
+    set address = #{address,jdbcType=VARCHAR},
+      address2 = #{address2,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=SMALLINT},
+      postal_code = #{postalCode,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP}
+    where address_id = #{addressId,jdbcType=SMALLINT}
+  </update>
+</mapper>
