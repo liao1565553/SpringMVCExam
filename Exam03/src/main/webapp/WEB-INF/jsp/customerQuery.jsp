@@ -10,20 +10,11 @@
 	href="${pageContext.request.contextPath}/res/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/res/css/bootstrap-responsive.css" />
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/res/css/style.css" />
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/res/css/myStyle.css" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/res/js/jquery2.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/res/js/jquery2.sorted.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/res/js/bootstrap.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/res/js/ckform.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/res/js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/style.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/myStyle.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/ckform.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/common.js"></script>
 
 <style type="text/css">
 body {
@@ -57,10 +48,9 @@ body {
 	margin-right: auto;
 }
 
-.top{
+.top {
 	margin-bottom: 10px;
 }
-
 </style>
 
 <script type="text/javascript">
@@ -70,15 +60,54 @@ body {
 					+ id;
 		}
 	}
+
+	function getPage(path) {
+		$
+				.ajax({
+					type : "GET",
+					dataType : "json",
+					url : "${pageContext.request.contextPath}/customer/" + path,
+					success : function(json) {
+						var tobody = "";
+						var pageNo = json.pageNo;
+						$
+
+								.each(
+										json.list,
+										function(index, item) {
+											tobody += "<tr>";
+											tobody += "<td class='floatLeft'><button id='delbtn' onclick='deleteFilm('${item.customerId}')'>删除</button><button>修改</button></td>"
+													+ item.customerId + "</td>";
+											tobody += "<td>" + item.firstName
+													+ "</td>";
+											tobody += "<td>" + item.lastName
+													+ "</td>";
+											tobody += "<td>" + item.addressId
+													+ "</td>";
+											tobody += "<td>" + item.email
+													+ "</td>";
+											tobody += "<td>" + item.customerId
+													+ "</td>";
+											tobody += "<td>" + item.lastUpdate
+													+ "</td>";
+											tobody += "</tr>";
+
+										});
+						// $("#bodycontent").html();
+						$("tbody").html(tobody);
+						$("#pageNo").html(pageNo);
+					}
+				});
+	}
 </script>
 
 </head>
 <body>
 	<div id="top">
-		<font color="#777777"> <strong>客户列表</strong></font>
-		<a class="addnew" 
-			href="${pageContext.request.contextPath}/customer/add">新建
-		</a>
+		<font color="#777777">
+			<strong>客户列表</strong>
+		</font>
+		<a class="addnew" href="${pageContext.request.contextPath}/customer/add">新建 </a>
 	</div>
 
 	<table class="table table-bordered table-responsive">
@@ -94,7 +123,6 @@ body {
 
 			</tr>
 		</thead>
-
 		<c:forEach var="item" items="${pageModel.list}">
 			<tr>
 				<td class="floatLeft">
@@ -111,11 +139,13 @@ body {
 		</c:forEach>
 	</table>
 	<div class="bottom">
-		<a href="${pageContext.request.contextPath}/customer/first">第一页</a> <a
-			href="${pageContext.request.contextPath}/customer/pre">上一页</a>
-		${pageModel.pageNo}/${pageModel.totalPages } <a
-			href="${pageContext.request.contextPath}/customer/next">下一页</a> <a
-			href="${pageContext.request.contextPath}/customer/last">最后一页</a>
+		<a onclick="getPage('firstPage')">第一页</a>
+		<a onclick="getPage('prePage')">上一页</a>
+		<span id="pageNo">${pageModel.pageNo}</span>
+		
+		<span>/${pageModel.totalPages}</span>
+		<a onclick="getPage('nextPage')">下一页</a>
+		<a onclick="getPage('lastPage')">最后一页</a>
 	</div>
 
 </body>

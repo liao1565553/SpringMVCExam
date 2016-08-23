@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hand.domain.Customer;
 import com.hand.model.PageModel;
@@ -26,6 +27,9 @@ public class CustomerController {
 	
 	@Resource
 	HttpServletRequest request;
+	
+//	@Resource
+//	HttpServletResponse response;
 	
 	/** 当前页 */
 	int pageNo = 1;
@@ -88,13 +92,13 @@ public class CustomerController {
 	 * 下一页
 	 * @return
 	 */
-	@RequestMapping(value="/next",method=RequestMethod.GET)
-	public String nextPage(ModelMap modelMap){
+	@RequestMapping(value="/nextPage",method=RequestMethod.GET)
+	public  @ResponseBody PageModel<Customer> nextPage(){
+		logger.info("下一页");
 		pageNo = nextPage;
 		PageModel<Customer> pageModel = customerService.getCustomerByPage(pageNo, pageSize);
 		updatePageMsg(pageModel);
-		request.getSession().setAttribute("pageModel", pageModel);
-		return "customerQuery";
+		return pageModel;
 	}
 	
 	/**
@@ -102,39 +106,37 @@ public class CustomerController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("pre")
-	public String prePage() {
+	@RequestMapping(value="prePage",method=RequestMethod.GET)
+	public @ResponseBody PageModel<Customer> prePage() {
+		logger.info("上一页");
 		pageNo = prePage;
 		PageModel<Customer> pageModel = customerService.getCustomerByPage(pageNo, pageSize);
 		updatePageMsg(pageModel);
-		request.getSession().setAttribute("pageModel", pageModel);
-		return "customerQuery";
+		return pageModel;
 	}
 
 	/**
 	 * 第一页
 	 * @return
 	 */
-	@RequestMapping("first")
-	public String firstPage() {
+	@RequestMapping(value="firstPage",method=RequestMethod.GET)
+	public @ResponseBody PageModel<Customer> firstPage() {
 		pageNo = fristPage;
 		PageModel<Customer> pageModel = customerService.getCustomerByPage(pageNo, pageSize);
 		updatePageMsg(pageModel);
-		request.getSession().setAttribute("pageModel", pageModel);
-		return "customerQuery";
+		return pageModel;
 	}
 	
 	/**
 	 * 最后一页
 	 * @return
 	 */
-	@RequestMapping("last")
-	public String lastPage() {
+	@RequestMapping(value="lastPage",method=RequestMethod.GET)
+	public @ResponseBody PageModel<Customer> lastPage() {
 		pageNo = lastPage;
 		PageModel<Customer> pageModel = customerService.getCustomerByPage(pageNo, pageSize);
 		updatePageMsg(pageModel);
-		request.getSession().setAttribute("pageModel", pageModel);
-		return "customerQuery";
+		return pageModel;
 	}
 
 	/**

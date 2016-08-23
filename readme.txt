@@ -1,9 +1,9 @@
-¹¤³ÌÃûÎªexam03
+ï»¿å·¥ç¨‹åä¸ºexam03
 
-ËùÓĞµÄÅäÖÃÎÄ¼ş¾ùÔÚsrc/main/resources  Ä¿Â¼ÏÂÀïÃæ
+æ‰€æœ‰çš„é…ç½®æ–‡ä»¶å‡åœ¨src/main/resources  ç›®å½•ä¸‹é‡Œé¢
 
-Êı¾İ¿âÅäÖÃËùÔÚÄ¿Â¼Îª  src/main/resources/jdbc.properties
+æ•°æ®åº“é…ç½®æ‰€åœ¨ç›®å½•ä¸º  src/main/resources/jdbc.properties
 
 
-jetty ·şÎñÆ÷½øÈë¹¤³Ìexam03 ÏÂµÄÔËĞĞÃüÁî mvn jetty:run
-·ÃÎÊ   http://localhost:8080 ²é¿´¹¤³Ì
+jetty æœåŠ¡å™¨è¿›å…¥å·¥ç¨‹exam03 ä¸‹çš„è¿è¡Œå‘½ä»¤ mvn jetty:run
+è®¿é—®   http://localhost:8080 æŸ¥çœ‹å·¥ç¨‹
